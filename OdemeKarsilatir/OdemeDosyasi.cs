@@ -23,10 +23,8 @@ namespace OdemeKarsilatir
         }
 
 
-
-        private async void btnPdfDosyaSec_Click(object sender, EventArgs e)
+        private void btnPdfDosyaSec_Click_1(object sender, EventArgs e)
         {
-
             string strText = string.Empty;
             List<string[]> st = new List<string[]>();
             List<KisiOdeme> odemeListe = new List<KisiOdeme>();
@@ -35,12 +33,11 @@ namespace OdemeKarsilatir
             ofd.Filter = "PDF Files(*.PDF)|*.PDF|All Files(*.*)|*.*";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-               
+
                 filepath = ofd.FileName.ToString();
                 PdfReader reader = new PdfReader(filepath);
                 int intPageNum = reader.NumberOfPages;
                 string[] words;
-                string line;
                 string[] line1;
                 try
                 {
@@ -52,7 +49,7 @@ namespace OdemeKarsilatir
 
                     for (int page = 1; page <= intPageNum; page++)
                     {
-                       
+
                         yuzdebar.Value = page;
                         yuzdelik++;
                         oran = Convert.ToInt32((yuzdelik / yuzdeliktepe) * 100);
@@ -103,6 +100,7 @@ namespace OdemeKarsilatir
                     }
                     Cursor.Current = Cursors.Default;
                     pdfDosyaData.DataSource = odemeListe;
+                    pdfDosyaData.Visible = true;
                     reader.Close();
                     OkumaLbl.Text = $"{filepath} dosyasındaki {intPageNum} kadar sayfa okundu. Toplam {odemeListe.Count} kayıt getirildi";
                 }
@@ -111,17 +109,26 @@ namespace OdemeKarsilatir
                     MessageBox.Show(ex.Message);
                 }
 
-                MessageBox.Show("İşlem Tamam");
-
+                MessageBox.Show($"{filepath} dosyasındaki {intPageNum} kadar sayfa okundu. Toplam {odemeListe.Count} kayıt getirildi", "Bilgilendirme",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                if (pdfDosyaData.RowCount == 0)
+                {
+                    btnExcelKaydet.Enabled = false;
+                    btnKarsilastir.Enabled = false;
+                    btnTxtDosya.Enabled = false;
+                }
+                else
+                {
+                    btnTxtDosya.Enabled = true;
+                }
             }
 
         }
 
-     
-       
-
-    
-
-      
+        private void OdemeDosyasi_Load(object sender, EventArgs e)
+        {
+            btnExcelKaydet.Enabled = false;
+            btnKarsilastir.Enabled = false;
+            btnTxtDosya.Enabled = false;
+        }
     }
 }
