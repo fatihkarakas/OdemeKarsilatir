@@ -127,10 +127,13 @@
   <data name="pdf-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Png\pdf-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Compare-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Png\Compare-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pdf-icon (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Png\pdf-icon (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Compare-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\Png\Compare-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="refreshh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Png\refreshh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
