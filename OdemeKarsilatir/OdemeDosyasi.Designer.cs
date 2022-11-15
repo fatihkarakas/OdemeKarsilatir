@@ -266,7 +266,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OdemeDosyasi";
-            this.Text = "Ödeme Dosyalarını Karşılaştır";
+            this.Text = "BATI DSS Ödeme Dosyalarını Karşılaştır";
             this.Load += new System.EventHandler(this.OdemeDosyasi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TxtMaasData)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
