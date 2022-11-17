@@ -277,7 +277,7 @@ namespace OdemeKarsilatir
                 // item.Iban = item.Iban == string.Empty ? odemeListe.FirstOrDefault(x => x.adisoyadi.Contains($"{item.Adi} {item.Soyadi}")).Iban : item.Iban;
 
                 var say = odemeListe.FindAll(x => x.Iban.Substring(x.Iban.Length - 16).Contains(item.Iban.Substring(item.Iban.Length - 16))).Count;
-                if (odemeListe.FindAll(x => x.Iban.Substring(x.Iban.Length - 16).Contains(item.Iban.Substring(item.Iban.Length - 16))).Count == 0)
+                if (odemeListe.Any(x => x.Iban.Substring(x.Iban.Length - 16).Contains(item.Iban.Substring(item.Iban.Length - 16))))
                 {
                     var k = new KisiOdeme()
                     {
@@ -289,7 +289,7 @@ namespace OdemeKarsilatir
                     };
                     txtOlmayanlar.Add(k);
                 }
-                if (odemeListe.Where(x => x.Iban.Substring(x.Iban.Length - 16) == item.Iban.Substring(item.Iban.Length - 16) && x.Odeme != item.Odenecek).ToList().Count != 0)
+                if (!odemeListe.Any(x => x.Iban.Substring(x.Iban.Length - 16) == item.Iban.Substring(item.Iban.Length - 16) && x.Odeme != item.Odenecek))
                 {
                     var k = new KisiOdeme()
                     {

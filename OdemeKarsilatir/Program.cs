@@ -16,7 +16,7 @@ namespace OdemeKarsilatir
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new OdemeDosyasi());
+            Application.Run(new AcilisEkran());
         }
     }
 }
