@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
 using Aspose.Pdf.Text;
+using Spire.Pdf.Utilities;
 
 namespace OdemeKarsilatir
 {
@@ -62,6 +63,52 @@ namespace OdemeKarsilatir
             }
         }
 
+        public void SpirePdfTest(string path)
+        {
+
+            //Load a PDF document using PdfDocument class
+            Spire.Pdf.PdfDocument pdf = new Spire.Pdf.PdfDocument(path);
+            //Create a StringBuilder instance
+            StringBuilder builder = new StringBuilder();
+            PdfTableExtractor extractor = new PdfTableExtractor(pdf);
+            //Loop through the pages in the PDF document
+            for (int pageIndex = 0; pageIndex < pdf.Pages.Count; pageIndex++)
+            {
+                //Create a PdfTableExtractor instance
+                Console.WriteLine(pageIndex);
+                //Extract table(s) from each page into a PdfTable array
+                PdfTable[] tableLists = extractor.ExtractTable(pageIndex);
+                if (tableLists != null && tableLists.Length > 0)
+                {
+                    
+                    //Loop through tables in the PdfTable array
+                    foreach (PdfTable table in tableLists)
+                    {
+                        //Loop through each table row
+                        for (int i = 0; i < table.GetRowCount(); i++)
+                        {
+                            //Loop through each table column
+                            for (int j = 0; j < table.GetColumnCount(); j++)
+                            {
+                                //Extract data from each table cell
+                                string text = table.GetText(i, j);
+                                text = text.Trim();
+                               text = text.Replace("\n", string.Empty);
+                               text = text.Replace("\r", string.Empty);
+                                //Append data to the StringBuilder instance
+                                builder.Append(text + "  |  ");
+                            }
+                            builder.Append("\r\n");
+                           
+                        }
+                    }
+                   
+                }
+            }
+            //Write data into a .txt document
+            File.WriteAllText("TestYapalim1.txt", builder.ToString());
+        }
+
 
         private void btnPdfDosyaSec_Click_1(object sender, EventArgs e)
         {
@@ -78,7 +125,7 @@ namespace OdemeKarsilatir
 
                 filepath = ofd.FileName.ToString();
                 PdfReader reader = new PdfReader(filepath);
-                test(filepath);
+                SpirePdfTest(filepath);
                 int intPageNum = reader.NumberOfPages;
                 string[] words;
                 string[] line1;
