@@ -33,17 +33,17 @@
             this.yuzdebar = new System.Windows.Forms.ProgressBar();
             this.OkumaLbl = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnPdfDosyaSec = new System.Windows.Forms.Button();
+            this.btnTxtDosya = new System.Windows.Forms.Button();
+            this.btnKarsilastir = new System.Windows.Forms.Button();
+            this.btnExcelKaydet = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.pdfDosyaData = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.PdfTab = new System.Windows.Forms.TabPage();
             this.MaasTxtTab = new System.Windows.Forms.TabPage();
             this.KarsilastirmaTab = new System.Windows.Forms.TabPage();
             this.KarsilastirmaData = new System.Windows.Forms.DataGridView();
-            this.btnPdfDosyaSec = new System.Windows.Forms.Button();
-            this.btnTxtDosya = new System.Windows.Forms.Button();
-            this.btnKarsilastir = new System.Windows.Forms.Button();
-            this.btnExcelKaydet = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TxtMaasData)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pdfDosyaData)).BeginInit();
@@ -108,6 +108,71 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1255, 69);
             this.flowLayoutPanel1.TabIndex = 4;
+            // 
+            // btnPdfDosyaSec
+            // 
+            this.btnPdfDosyaSec.Image = global::OdemeKarsilatir.Properties.Resources.pdf_icon__1_;
+            this.btnPdfDosyaSec.Location = new System.Drawing.Point(2, 2);
+            this.btnPdfDosyaSec.Margin = new System.Windows.Forms.Padding(2);
+            this.btnPdfDosyaSec.Name = "btnPdfDosyaSec";
+            this.btnPdfDosyaSec.Size = new System.Drawing.Size(181, 57);
+            this.btnPdfDosyaSec.TabIndex = 4;
+            this.btnPdfDosyaSec.Text = "Ödeme Pdf Dosyası";
+            this.btnPdfDosyaSec.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnPdfDosyaSec.UseVisualStyleBackColor = true;
+            this.btnPdfDosyaSec.Click += new System.EventHandler(this.btnPdfDosyaSec_Click_1);
+            // 
+            // btnTxtDosya
+            // 
+            this.btnTxtDosya.Image = global::OdemeKarsilatir.Properties.Resources.txt_icon;
+            this.btnTxtDosya.Location = new System.Drawing.Point(187, 2);
+            this.btnTxtDosya.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTxtDosya.Name = "btnTxtDosya";
+            this.btnTxtDosya.Size = new System.Drawing.Size(144, 57);
+            this.btnTxtDosya.TabIndex = 3;
+            this.btnTxtDosya.Text = "Maaş txt Dosyası";
+            this.btnTxtDosya.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTxtDosya.UseVisualStyleBackColor = true;
+            this.btnTxtDosya.Click += new System.EventHandler(this.btnTxtDosya_Click);
+            // 
+            // btnKarsilastir
+            // 
+            this.btnKarsilastir.Image = global::OdemeKarsilatir.Properties.Resources.Compare_icon;
+            this.btnKarsilastir.Location = new System.Drawing.Point(335, 2);
+            this.btnKarsilastir.Margin = new System.Windows.Forms.Padding(2);
+            this.btnKarsilastir.Name = "btnKarsilastir";
+            this.btnKarsilastir.Size = new System.Drawing.Size(144, 57);
+            this.btnKarsilastir.TabIndex = 2;
+            this.btnKarsilastir.Text = "Karşılaştır";
+            this.btnKarsilastir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnKarsilastir.UseVisualStyleBackColor = true;
+            this.btnKarsilastir.Click += new System.EventHandler(this.btnKarsilastir_Click);
+            // 
+            // btnExcelKaydet
+            // 
+            this.btnExcelKaydet.Image = global::OdemeKarsilatir.Properties.Resources.Excel_icon;
+            this.btnExcelKaydet.Location = new System.Drawing.Point(483, 2);
+            this.btnExcelKaydet.Margin = new System.Windows.Forms.Padding(2);
+            this.btnExcelKaydet.Name = "btnExcelKaydet";
+            this.btnExcelKaydet.Size = new System.Drawing.Size(144, 57);
+            this.btnExcelKaydet.TabIndex = 1;
+            this.btnExcelKaydet.Text = "Excel Kaydet";
+            this.btnExcelKaydet.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnExcelKaydet.UseVisualStyleBackColor = true;
+            this.btnExcelKaydet.Click += new System.EventHandler(this.btnExcelKaydet_Click);
+            // 
+            // button1
+            // 
+            this.button1.Image = global::OdemeKarsilatir.Properties.Resources.refreshh;
+            this.button1.Location = new System.Drawing.Point(631, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(144, 57);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Yenile";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // pdfDosyaData
             // 
@@ -188,71 +253,6 @@
             this.KarsilastirmaData.Size = new System.Drawing.Size(1235, 435);
             this.KarsilastirmaData.TabIndex = 2;
             this.KarsilastirmaData.Visible = false;
-            // 
-            // btnPdfDosyaSec
-            // 
-            this.btnPdfDosyaSec.Image = global::OdemeKarsilatir.Properties.Resources.pdf_icon__1_;
-            this.btnPdfDosyaSec.Location = new System.Drawing.Point(2, 2);
-            this.btnPdfDosyaSec.Margin = new System.Windows.Forms.Padding(2);
-            this.btnPdfDosyaSec.Name = "btnPdfDosyaSec";
-            this.btnPdfDosyaSec.Size = new System.Drawing.Size(181, 57);
-            this.btnPdfDosyaSec.TabIndex = 4;
-            this.btnPdfDosyaSec.Text = "Ödeme Pdf Dosyası";
-            this.btnPdfDosyaSec.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnPdfDosyaSec.UseVisualStyleBackColor = true;
-            this.btnPdfDosyaSec.Click += new System.EventHandler(this.btnPdfDosyaSec_Click_1);
-            // 
-            // btnTxtDosya
-            // 
-            this.btnTxtDosya.Image = global::OdemeKarsilatir.Properties.Resources.txt_icon;
-            this.btnTxtDosya.Location = new System.Drawing.Point(187, 2);
-            this.btnTxtDosya.Margin = new System.Windows.Forms.Padding(2);
-            this.btnTxtDosya.Name = "btnTxtDosya";
-            this.btnTxtDosya.Size = new System.Drawing.Size(144, 57);
-            this.btnTxtDosya.TabIndex = 3;
-            this.btnTxtDosya.Text = "Maaş txt Dosyası";
-            this.btnTxtDosya.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnTxtDosya.UseVisualStyleBackColor = true;
-            this.btnTxtDosya.Click += new System.EventHandler(this.btnTxtDosya_Click);
-            // 
-            // btnKarsilastir
-            // 
-            this.btnKarsilastir.Image = global::OdemeKarsilatir.Properties.Resources.Compare_icon;
-            this.btnKarsilastir.Location = new System.Drawing.Point(335, 2);
-            this.btnKarsilastir.Margin = new System.Windows.Forms.Padding(2);
-            this.btnKarsilastir.Name = "btnKarsilastir";
-            this.btnKarsilastir.Size = new System.Drawing.Size(144, 57);
-            this.btnKarsilastir.TabIndex = 2;
-            this.btnKarsilastir.Text = "Karşılaştır";
-            this.btnKarsilastir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnKarsilastir.UseVisualStyleBackColor = true;
-            this.btnKarsilastir.Click += new System.EventHandler(this.btnKarsilastir_Click);
-            // 
-            // btnExcelKaydet
-            // 
-            this.btnExcelKaydet.Image = global::OdemeKarsilatir.Properties.Resources.Excel_icon;
-            this.btnExcelKaydet.Location = new System.Drawing.Point(483, 2);
-            this.btnExcelKaydet.Margin = new System.Windows.Forms.Padding(2);
-            this.btnExcelKaydet.Name = "btnExcelKaydet";
-            this.btnExcelKaydet.Size = new System.Drawing.Size(144, 57);
-            this.btnExcelKaydet.TabIndex = 1;
-            this.btnExcelKaydet.Text = "Excel Kaydet";
-            this.btnExcelKaydet.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnExcelKaydet.UseVisualStyleBackColor = true;
-            this.btnExcelKaydet.Click += new System.EventHandler(this.btnExcelKaydet_Click);
-            // 
-            // button1
-            // 
-            this.button1.Image = global::OdemeKarsilatir.Properties.Resources.refreshh;
-            this.button1.Location = new System.Drawing.Point(631, 2);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 57);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Yenile";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // OdemeDosyasi
             // 
