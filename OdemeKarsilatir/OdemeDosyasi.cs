@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClosedXML.Excel;
+using Aspose.Pdf.Text;
+using Spire.Pdf.Utilities;
 
 namespace OdemeKarsilatir
 {
@@ -22,6 +24,89 @@ namespace OdemeKarsilatir
         public OdemeDosyasi()
         {
             InitializeComponent();
+        }
+
+        public void test(string path)
+        {
+            Aspose.Pdf.Document pdfDocument = new Aspose.Pdf.Document(path);
+
+            // Loop through the pages                      
+            foreach (var page in pdfDocument.Pages)
+            {
+                // Create a table absorber and visit the page
+                Aspose.Pdf.Text.TableAbsorber absorber = new Aspose.Pdf.Text.TableAbsorber();
+                absorber.Visit(page);
+
+                // Loop through each absorbed table 
+                foreach (AbsorbedTable table in absorber.TableList)
+                {
+                    Console.WriteLine("Table");
+
+                    // Loop through each row in the table
+                    foreach (AbsorbedRow row in table.RowList)
+                    {
+                        // Loop through each cell in the row
+                        foreach (AbsorbedCell cell in row.CellList)
+                        {
+                            // Loop through the text fragments
+                            foreach (TextFragment fragment in cell.TextFragments)
+                            {
+                                var sb = new StringBuilder();
+                                foreach (TextSegment seg in fragment.Segments)
+                                    sb.Append(seg.Text);
+                                Console.Write($"{sb.ToString()}|");
+                            }
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            }
+        }
+
+        public void SpirePdfTest(string path)
+        {
+
+            //Load a PDF document using PdfDocument class
+            Spire.Pdf.PdfDocument pdf = new Spire.Pdf.PdfDocument(path);
+            //Create a StringBuilder instance
+            StringBuilder builder = new StringBuilder();
+            PdfTableExtractor extractor = new PdfTableExtractor(pdf);
+            //Loop through the pages in the PDF document
+            for (int pageIndex = 0; pageIndex < pdf.Pages.Count; pageIndex++)
+            {
+                //Create a PdfTableExtractor instance
+                Console.WriteLine(pageIndex);
+                //Extract table(s) from each page into a PdfTable array
+                PdfTable[] tableLists = extractor.ExtractTable(pageIndex);
+                if (tableLists != null && tableLists.Length > 0)
+                {
+                    
+                    //Loop through tables in the PdfTable array
+                    foreach (PdfTable table in tableLists)
+                    {
+                        //Loop through each table row
+                        for (int i = 0; i < table.GetRowCount(); i++)
+                        {
+                            //Loop through each table column
+                            for (int j = 0; j < table.GetColumnCount(); j++)
+                            {
+                                //Extract data from each table cell
+                                string text = table.GetText(i, j);
+                                text = text.Trim();
+                               text = text.Replace("\n", string.Empty);
+                               text = text.Replace("\r", string.Empty);
+                                //Append data to the StringBuilder instance
+                                builder.Append(text + "  |  ");
+                            }
+                            builder.Append("\r\n");
+                           
+                        }
+                    }
+                   
+                }
+            }
+            //Write data into a .txt document
+            File.WriteAllText("TestYapalim1.txt", builder.ToString());
         }
 
 
@@ -40,11 +125,12 @@ namespace OdemeKarsilatir
 
                 filepath = ofd.FileName.ToString();
                 PdfReader reader = new PdfReader(filepath);
+                SpirePdfTest(filepath);
                 int intPageNum = reader.NumberOfPages;
                 string[] words;
                 string[] line1;
                 try
-                {
+                {     // todo BUrada PDF table okuma ayarları aspose ile denendi fakat olmadı
                     // PdfReader reader = new PdfReader(filepath);
                     yuzdebar.Minimum = 0;
                     yuzdebar.Maximum = intPageNum;
@@ -114,7 +200,7 @@ namespace OdemeKarsilatir
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show($"İşlem Sırasında bir hata oluştu\n Hata Kod: {ex.Message.ToString()}", "İşlme Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 MessageBox.Show($"{filepath} dosyasındaki {intPageNum} kadar sayfa okundu. Toplam {odemeListe.Count} kayıt getirildi", "Bilgilendirme", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -200,7 +286,7 @@ namespace OdemeKarsilatir
             catch (Exception ex)
             {
 
-                MessageBox.Show($"Hata oluştu {ex.Message.ToString()}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"İşlem Sırasında bir hata oluştu\n Hata Kod: {ex.Message.ToString()}", "İşlme Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Cursor.Current = Cursors.Default;
@@ -252,56 +338,50 @@ namespace OdemeKarsilatir
             txtOlmayanlar.Clear();
             KarsilastirmaData.DataSource = null;
             yuzdebar.Maximum = 100;
-            int deger = 1;
-            foreach (var item in odemeListe)
+            try
             {
-                Cursor.Current = Cursors.WaitCursor;
-               
-                
-                    if (listeTxtFile.FindAll(x => x.Iban.Contains(item.Iban.Substring(item.Iban.Length-17))).Count == 0)
+                int deger = 1;
+                foreach (var item in odemeListe)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    var KIban = item.Iban.Substring(item.Iban.Length - 16);
+
+                    if (!listeTxtFile.Any(x => x.Iban.Contains(KIban)) || listeTxtFile.Where(x => x.Iban.Contains(KIban) && x.Odenecek != item.Odeme).ToList().Count !=0)
                     {
                         txtOlmayanlar.Add(item);
                     }
-                    if (listeTxtFile.Where(x => x.Iban.Contains(item.Iban.Substring(item.Iban.Length - 17)) && x.Odenecek != item.Odeme).ToList().Count != 0)
+                 
+                    //item.Iban = item.Iban == string.Empty ? liste.FirstOrDefault(x => x.BankaSube.Contains(item.Iban) && x.BankaKod.Contains(item.Iban)).Iban:item.Iban;
+
+                    yuzdebar.Value = Convert.ToInt32((deger) * (100) / odemeListe.Count);
+                    deger++;
+                }
+                foreach (var item in listeTxtFile)
+                {
+                    var KIban = item.Iban.Substring(item.Iban.Length - 16);
+
+                    var say = odemeListe.FindAll(x => x.Iban.Substring(x.Iban.Length - 16).Contains(KIban)).Count;
+                    if (odemeListe.Where(x => x.Iban.Contains(KIban)).ToList().Count==0 )
                     {
-                        txtOlmayanlar.Add(item);
+                        var k = new KisiOdeme()
+                        {
+                            Sira = 0,
+                            tck = "PDF dosyasında Kişi Bilgisi Yok",
+                            adisoyadi = $"{item.Adi} {item.Soyadi}",
+                            Iban = item.Iban.Substring(item.Iban.Length - 15),
+                            Odeme = item.Odenecek
+                        };
+                        txtOlmayanlar.Add(k);
                     }
-                
-                //item.Iban = item.Iban == string.Empty ? liste.FirstOrDefault(x => x.BankaSube.Contains(item.Iban) && x.BankaKod.Contains(item.Iban)).Iban:item.Iban;
-               
-                yuzdebar.Value = Convert.ToInt32((deger) * (100) / odemeListe.Count);
-                deger++;
+                   
+
+                }
             }
-            foreach (var item in listeTxtFile)
+            catch (Exception ex)
             {
-                // item.Iban = item.Iban == string.Empty ? odemeListe.FirstOrDefault(x => x.adisoyadi.Contains($"{item.Adi} {item.Soyadi}")).Iban : item.Iban;
-
-                var say = odemeListe.FindAll(x => x.Iban.Substring(x.Iban.Length - 16).Contains(item.Iban.Substring(item.Iban.Length - 16))).Count;
-                if (odemeListe.Any(x => x.Iban.Substring(x.Iban.Length - 16).Contains(item.Iban.Substring(item.Iban.Length - 16))))
-                {
-                    var k = new KisiOdeme()
-                    {
-                        Sira = 0,
-                        tck = "PDF dosyasında Kişi Bilgisi Yok",
-                        adisoyadi = $"{item.Adi} {item.Soyadi}",
-                        Iban = item.Iban.Substring(item.Iban.Length - 15),
-                        Odeme = item.Odenecek
-                    };
-                    txtOlmayanlar.Add(k);
-                }
-                if (!odemeListe.Any(x => x.Iban.Substring(x.Iban.Length - 16) == item.Iban.Substring(item.Iban.Length - 16) && x.Odeme != item.Odenecek))
-                {
-                    var k = new KisiOdeme()
-                    {
-                        Sira = 0,
-                        tck = "PDF dosyasında Kişi Bilgisi Yok",
-                        adisoyadi = $"{item.Adi} {item.Soyadi}",
-                        Iban = item.Iban,
-                        Odeme = item.Odenecek
-                    };
-
-                }
+                MessageBox.Show($"İşlem Sırasında bir hata oluştu\n Hata Kod: {ex.Message.ToString()}", "İşlme Hatası",MessageBoxButtons.OK,MessageBoxIcon.Error) ;
             }
+          
             btnExcelKaydet.Enabled = true;
             KarsilastirmaData.DataSource = txtOlmayanlar;
             KarsilastirmaData.Visible = true;
